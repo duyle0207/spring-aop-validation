@@ -1,4 +1,4 @@
-package com.bitsmuggler.learning.springbootaspect;
+package com.duylv.learning.springbootaspect;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

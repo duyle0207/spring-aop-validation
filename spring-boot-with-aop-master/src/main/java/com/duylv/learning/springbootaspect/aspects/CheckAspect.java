@@ -1,4 +1,4 @@
-package com.bitsmuggler.learning.springbootaspect.aspects;
+package com.duylv.learning.springbootaspect.aspects;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.UnsupportedMediaTypeStatusException;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.Arrays;
@@ -22,22 +21,22 @@ import java.util.List;
 @Component
 public class CheckAspect {
 
-  @Before("@annotation(com.bitsmuggler.learning.springbootaspect.aspects.FileProperty)")
+  @Before("@annotation(com.duylv.learning.springbootaspect.aspects.FileProperty)")
   public void checkSomethingBefore(JoinPoint joinPoint) {
-    System.out.println("Before execution - Roles: " + Arrays.toString(getRoles(joinPoint)));
+    System.out.println("Before execution - Roles: " + Arrays.toString(chk(joinPoint)));
   }
 
-  @AfterReturning(pointcut = "@annotation(com.bitsmuggler.learning.springbootaspect.aspects.FileProperty)")
+  @AfterReturning(pointcut = "@annotation(com.duylv.learning.springbootaspect.aspects.FileProperty)")
   public void checkSomethingAfter(JoinPoint joinPoint) {
-    System.out.println("After execution - Roles: " + Arrays.toString(getRoles(joinPoint)));
+    System.out.println("After execution - Roles: " + Arrays.toString(chk(joinPoint)));
   }
 
-  @AfterThrowing(pointcut = "@annotation(com.bitsmuggler.learning.springbootaspect.aspects.FileProperty)", throwing = "ex")
+  @AfterThrowing(pointcut = "@annotation(com.duylv.learning.springbootaspect.aspects.FileProperty)", throwing = "ex")
   public void checkSomethingAfterThrowingAnException(JoinPoint joinPoint, Exception ex) {
-    System.out.println("After throwing an exception - Roles:" + Arrays.toString(getRoles(joinPoint)) + ex);
+    System.out.println("After throwing an exception - Roles:" + Arrays.toString(chk(joinPoint)) + ex);
   }
 
-  @Around("within(com.bitsmuggler.learning.springbootaspect.*)")
+  @Around("within(com.duylv.learning.springbootaspect.*)")
   public Object checkSomethingAround(ProceedingJoinPoint joinPoint) throws Throwable {
     MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
     Parameter[] parameters = methodSignature.getMethod().getParameters();
@@ -63,7 +62,7 @@ public class CheckAspect {
   }
 
 
-  public String[] getRoles(JoinPoint joinPoint) {
+  public String[] chk(JoinPoint joinPoint) {
     MethodSignature signature = (MethodSignature) joinPoint.getSignature();
     Method method = signature.getMethod();
     CheckSomething myAnnotation = method.getAnnotation(CheckSomething.class);
